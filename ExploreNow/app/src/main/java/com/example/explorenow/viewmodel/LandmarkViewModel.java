@@ -12,17 +12,33 @@ import com.example.explorenow.repository.LandmarkRepository;
 import java.util.List;
 
 public class LandmarkViewModel extends AndroidViewModel {
-    private LandmarkRepository repo;
-    private LiveData<List<Landmark>> all;
+
+    private final LandmarkRepository repository;
+    private final LiveData<List<Landmark>> allLandmarks;
+
     public LandmarkViewModel(@NonNull Application application) {
         super(application);
-        repo = new LandmarkRepository(application);
-        all = repo.getAllLandmarks();
+        repository = new LandmarkRepository(application);
+        allLandmarks = repository.getAllLandmarks();
     }
-    public LiveData<List<Landmark>> getAll() { return all; }
-    public void insert(Landmark l) { repo.insert(l); }
-    public void update(Landmark l) { repo.update(l); }
-    public void delete(Landmark l) { repo.delete(l); }
-    public LiveData<Landmark> getById(int id) { return repo.getById(id); }
-}
 
+    public LiveData<List<Landmark>> getAllLandmarks() {
+        return allLandmarks;
+    }
+
+    public void insert(Landmark landmark) {
+        repository.insert(landmark);
+    }
+
+    public void update(Landmark landmark) {
+        repository.update(landmark);
+    }
+
+    public void delete(Landmark landmark) {
+        repository.delete(landmark);
+    }
+
+    public LiveData<Landmark> getById(int id) {
+        return repository.getById(id);
+    }
+}

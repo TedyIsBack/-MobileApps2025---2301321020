@@ -70,6 +70,18 @@ public class EditorActivity extends AppCompatActivity {
         String desc = etDesc.getText().toString().trim();
         String adr = etAddress.getText().toString();
 
+        if (name.isEmpty()) {
+            etName.setError("Please enter a name");
+            etName.requestFocus();
+            return;
+        }
+
+        if (adr.isEmpty()) {
+            etAddress.setError("Please enter an address");
+            etAddress.requestFocus();
+            return;
+        }
+
         Landmark l = new Landmark(name, desc, adr,
                 imageUri != null ? imageUri.toString() : null);
         viewModel.insert(l);
