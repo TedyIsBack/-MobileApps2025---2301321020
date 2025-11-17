@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.zxing:core:3.5.4")
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material.v1110)

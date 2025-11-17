@@ -17,6 +17,7 @@ import com.google.android.material.button.MaterialButton;
 
 public class LandmarkListActivity extends AppCompatActivity {
 
+    public static final String LANDMARK_ID = "landmark_id";
     private LandmarkViewModel viewModel;
     private LandmarkAdapter adapter;
 
@@ -34,11 +35,19 @@ public class LandmarkListActivity extends AppCompatActivity {
         adapter = new LandmarkAdapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.lambdaOnClick = landmark -> {
-            Intent intent = new Intent(this, LandmarkListActivity.class);
-            intent.putExtra("landmark_id", landmark.id);
+//        adapter.setOnItemClick(landmark -> {
+//            Intent intent = new Intent(this, LandmarkDetailActivity.class);
+//            intent.putExtra(LANDMARK_ID, landmark.id);
+//            startActivity(intent);
+//        });
+
+        adapter.setOnQrClick(landmark -> {
+            Intent intent = new Intent(this, LandmarkQrActivity.class);
+            intent.putExtra(LANDMARK_ID, landmark.id);
             startActivity(intent);
-        };
+        });
+
+
 
         btnAdd.setOnClickListener(v -> {
             Intent intent = new Intent(this, EditorActivity.class);
@@ -59,9 +68,9 @@ public class LandmarkListActivity extends AppCompatActivity {
                     }
                 });
 
-        adapter.lambdaOnQrClick = landmark -> {
+        adapter.setOnQrClick(landmark -> {
             Toast.makeText(this, "Generate QR for " + landmark.name, Toast.LENGTH_SHORT).show();
-        };
+        });
 
         viewModel.getAllLandmarks().observe(this, landmarks -> adapter.submitList(landmarks));
     }

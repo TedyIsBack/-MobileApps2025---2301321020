@@ -19,13 +19,19 @@ import java.util.List;
 public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.LandmarkViewHolder> {
 
     private final List<Landmark> landmarks = new ArrayList<>();
+    private OnItemClick itemClick;
+    private OnQrClick qrClick;
 
     public interface OnItemClick {
         void onClick(Landmark landmark);
     }
 
-    public OnItemClick lambdaOnClick;
-    public OnItemClick lambdaOnQrClick;
+    public interface OnQrClick {
+        void onQrClick(Landmark landmark);
+    }
+
+    public void setOnItemClick(OnItemClick click) { this.itemClick = click; }
+    public void setOnQrClick(OnQrClick click) { this.qrClick = click; }
 
     @NonNull
     @Override
@@ -42,20 +48,17 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
         holder.tvAddress.setText(landmark.address);
         holder.tvDescription.setText(landmark.description);
 
-
         holder.cardView.setOnClickListener(v -> {
-            if (lambdaOnClick != null) lambdaOnClick.onClick(landmark);
+            if (itemClick != null) itemClick.onClick(landmark);
         });
 
         holder.btnGenerateQR.setOnClickListener(v -> {
-            if (lambdaOnQrClick != null) lambdaOnQrClick.onClick(landmark);
+            if (qrClick != null) qrClick.onQrClick(landmark);
         });
     }
 
     @Override
-    public int getItemCount() {
-        return landmarks.size();
-    }
+    public int getItemCount() { return landmarks.size(); }
 
     public void submitList(List<Landmark> list) {
         landmarks.clear();
@@ -74,7 +77,7 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
             tvName = itemView.findViewById(R.id.tvName);
             tvAddress = itemView.findViewById(R.id.tvAddress);
             tvDescription = itemView.findViewById(R.id.tvDescription);
-            btnGenerateQR = itemView.findViewById(R.id.idBtnGenerateQR);
+            btnGenerateQR = itemView.findViewById(R.id.btnQr);
         }
     }
 }
