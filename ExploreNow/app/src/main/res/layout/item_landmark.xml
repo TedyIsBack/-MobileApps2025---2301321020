@@ -1,4 +1,4 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardViewRoot"
     android:layout_width="match_parent"
@@ -10,21 +10,25 @@
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
 
-<LinearLayout
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="12dp">
 
+        <!-- Landmark Image -->
         <ImageView
             android:id="@+id/imgLandmark"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
-            android:contentDescription="Landmark Image"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="12dp"
+            android:background="?attr/colorSurfaceVariant"
+            android:clipToOutline="true"
+            android:outlineProvider="background"/>
 
+        <!-- Texts and button -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -36,6 +40,7 @@
                 android:text="Landmark Name"
                 android:textStyle="bold"
                 android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -43,27 +48,30 @@
                 android:id="@+id/tvAddress"
                 android:text="Address"
                 android:textSize="12sp"
-                android:textColor="#666666"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"/>
+
             <TextView
                 android:id="@+id/tvDescription"
                 android:text="Short description..."
                 android:textSize="14sp"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"/>
+                android:maxLines="2"
+                android:layout_marginTop="4dp"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnQr"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="8dp"
                 android:text="Generate QR Code" />
 
         </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

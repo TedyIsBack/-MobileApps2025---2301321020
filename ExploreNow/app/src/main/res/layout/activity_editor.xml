@@ -1,85 +1,111 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:spacing="12dp">
+        android:gravity="center_horizontal">
 
-        <ImageView
-            android:id="@+id/imgPreview"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background"
-            android:contentDescription="Preview"
-            android:layout_marginBottom="16dp"/>
+        <!-- IMAGE PREVIEW CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp">
 
+            <ImageView
+                android:id="@+id/imgPreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Upload Image Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUploadImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upload Image"/>
+            android:text="Upload Image"
+            android:layout_marginBottom="24dp" />
 
-        <!-- Name Field -->
+        <!-- NAME -->
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Name"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:layout_marginBottom="12dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- DESCRIPTION -->
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Description"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:layout_marginBottom="12dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- ADDRESS -->
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Address(str., city, country)"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="Address (street, city, country)"
+            android:layout_marginBottom="24dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- BUTTONS -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="24dp"
-            android:spacing="16dp">
+            android:layout_marginTop="8dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSave"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Save" />
+                android:text="Save"
+                android:layout_marginEnd="8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBack"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Back" />
+                android:text="Back"
+                android:layout_marginStart="8dp" />
 
         </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+</androidx.core.widget.NestedScrollView>
