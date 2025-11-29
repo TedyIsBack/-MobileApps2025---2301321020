@@ -40,15 +40,19 @@ android {
 
 dependencies {
     implementation("com.google.zxing:core:3.5.4")
+    implementation (libs.zxing.android.embedded)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material.v1110)
 
     implementation(libs.room.runtime.v261)
+    implementation(libs.play.services.mlkit.barcode.scanning)
+    implementation(libs.camera.view)
+    implementation(libs.camera.lifecycle)
     annotationProcessor(libs.room.compiler.v261)
 
     implementation(libs.recyclerview)
-
+    implementation(libs.camera.view)
     implementation(libs.core)
     implementation(libs.zxing.android.embedded)
 

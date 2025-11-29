@@ -16,19 +16,14 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <!-- Landmark Image -->
         <ImageView
             android:id="@+id/imgLandmark"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
-            android:layout_marginEnd="12dp"
-            android:background="?attr/colorSurfaceVariant"
-            android:clipToOutline="true"
-            android:outlineProvider="background"/>
+            android:layout_marginEnd="12dp"/>
 
-        <!-- Texts and button -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -53,24 +48,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"/>
 
-            <TextView
-                android:id="@+id/tvDescription"
-                android:text="Short description..."
-                android:textSize="14sp"
-                android:textColor="?attr/colorOnSurface"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:layout_marginTop="4dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnQr"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Generate QR Code" />
+                android:gravity="start">
+
+                <Button
+                    android:id="@+id/btnQr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QR"/>
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

@@ -36,4 +36,9 @@ public class LCardUtils {
 
         return sb.toString();
     }
+
+    public static Landmark lCardToLandmark(String lcardRaw) {
+
+    return null;
+    }
 }

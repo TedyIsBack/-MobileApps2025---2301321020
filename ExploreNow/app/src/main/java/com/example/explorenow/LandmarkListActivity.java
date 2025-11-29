@@ -2,7 +2,6 @@ package com.example.explorenow;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.explorenow.adapter.LandmarkAdapter;
+import com.example.explorenow.data.Landmark;
+import com.example.explorenow.utils.LCardUtils;
 import com.example.explorenow.viewmodel.LandmarkViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class LandmarkListActivity extends AppCompatActivity {
-
     private LandmarkViewModel viewModel;
     private LandmarkAdapter adapter;
 
@@ -26,16 +27,30 @@ public class LandmarkListActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewLandmarks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new LandmarkAdapter();
-        recyclerView.setAdapter(adapter);
 
         TextView tvEmpty = findViewById(R.id.tvEmpty);
         MaterialButton btnAdd = findViewById(R.id.btnAddLandmark);
 
+        adapter = new LandmarkAdapter();
+        recyclerView.setAdapter(adapter);
+
+        viewModel = new ViewModelProvider(this).get(LandmarkViewModel.class);
+
         adapter.setOnQrClick(landmark -> {
-            Intent intent = new Intent(this, LandmarkQrActivity.class);
-            intent.putExtra(LandmarkQrActivity.LANDMARK_ID, landmark.id);
+            // Генерираме LCard string и го пращаме
+            String lcardData = LCardUtils.landmarkToLCard(landmark);
+            LandmarkQrActivity.start(this, lcardData);
+        });
+
+        adapter.setOnEditClick(landmark -> {
+            Intent intent = new Intent(this, EditorActivity.class);
+            intent.putExtra(EditorActivity.EXTRA_LANDMARK_ID, landmark.id);
             startActivity(intent);
+        });
+
+        adapter.setOnDeleteClick(landmark -> {
+            viewModel.delete(landmark);
+            Snackbar.make(recyclerView, "Deleted: " + landmark.name, Snackbar.LENGTH_SHORT).show();
         });
 
         btnAdd.setOnClickListener(v -> {
@@ -43,16 +58,15 @@ public class LandmarkListActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        viewModel = new ViewModelProvider(this).get(LandmarkViewModel.class);
         viewModel.getAllLandmarks().observe(this, landmarks -> {
             if (landmarks == null || landmarks.isEmpty()) {
-                tvEmpty.setVisibility(View.VISIBLE);
-                btnAdd.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
+                tvEmpty.setVisibility(TextView.VISIBLE);
+                btnAdd.setVisibility(MaterialButton.VISIBLE);
+                recyclerView.setVisibility(RecyclerView.GONE);
             } else {
-                tvEmpty.setVisibility(View.GONE);
-                btnAdd.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                tvEmpty.setVisibility(TextView.GONE);
+                btnAdd.setVisibility(MaterialButton.GONE);
+                recyclerView.setVisibility(RecyclerView.VISIBLE);
                 adapter.submitList(landmarks);
             }
         });

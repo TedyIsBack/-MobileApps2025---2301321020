@@ -1,50 +1,43 @@
 package com.example.explorenow;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.explorenow.data.Landmark;
-import com.example.explorenow.repository.AppDatabase;
-import com.example.explorenow.utils.LCardUtils;
 import com.example.explorenow.utils.QrUtils;
 import com.google.zxing.WriterException;
 
 public class LandmarkQrActivity extends AppCompatActivity {
 
-    public static final String QR_TEXT = "QR Code for: ";
-    public static final String LANDMARK_ID = "landmark_id";
+    private static final String EXTRA_QR_DATA = "qr_data";
+
+    private ImageView imgQr;
+
+    public static void start(Context context, String qrData) {
+        Intent intent = new Intent(context, LandmarkQrActivity.class);
+        intent.putExtra(EXTRA_QR_DATA, qrData);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landmark_qr);
 
-        TextView tv = findViewById(R.id.tvTitle);
-        ImageView img = findViewById(R.id.imgQr);
+        imgQr = findViewById(R.id.imgQr);
 
-        int landmarkId = getIntent().getIntExtra(LANDMARK_ID, -1);
-        if (landmarkId == -1) {
-            finish();
-            return;
-        }
-        var dao = AppDatabase.getInstance(getApplicationContext()).landmarkDao();
-        dao.getById(landmarkId).observe(this, landmark -> {
-            if (landmark == null) return;
-
-            tv.setText(QR_TEXT + landmark.name);
-
-            String vcard = LCardUtils.landmarkToLCard(landmark);
-
+        String data = getIntent().getStringExtra(EXTRA_QR_DATA);
+        if (data != null) {
             try {
-                Bitmap qr = QrUtils.generateQrBitmap(vcard);
-                img.setImageBitmap(qr);
+                Bitmap qrBitmap = QrUtils.generateQrBitmap(data);
+                imgQr.setImageBitmap(qrBitmap);
             } catch (WriterException e) {
                 e.printStackTrace();
             }
-        });
+        }
     }
 }

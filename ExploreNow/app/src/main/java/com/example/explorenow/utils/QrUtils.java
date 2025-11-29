@@ -3,9 +3,13 @@ package com.example.explorenow.utils;
 import android.graphics.Bitmap;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class QrUtils {
 
@@ -14,7 +18,12 @@ public class QrUtils {
     public static Bitmap generateQrBitmap(String text, int size) throws WriterException {
 
         QRCodeWriter writer = new QRCodeWriter();
-        BitMatrix bitMatrix = writer.encode(text, BarcodeFormat.QR_CODE, size, size);
+
+        // Ensure UTF-8 encoding
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+
+        BitMatrix bitMatrix = writer.encode(text, BarcodeFormat.QR_CODE, size, size, hints);
 
         Bitmap bmp = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565);
 
