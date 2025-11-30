@@ -19,7 +19,6 @@ public class QrUtils {
 
         QRCodeWriter writer = new QRCodeWriter();
 
-        // Ensure UTF-8 encoding
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 

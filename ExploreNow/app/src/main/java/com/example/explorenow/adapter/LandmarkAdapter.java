@@ -68,11 +68,7 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
         }
 
         holder.cardView.setOnClickListener(v -> {
-            if (editClick != null) {
-                editClick.onEditClick(landmark);  // стартира EditorActivity
-            } else if (itemClick != null) {
-                itemClick.onClick(landmark);
-            }
+            if (itemClick != null) itemClick.onClick(landmark);
         });
 
         holder.btnQr.setOnClickListener(v -> {

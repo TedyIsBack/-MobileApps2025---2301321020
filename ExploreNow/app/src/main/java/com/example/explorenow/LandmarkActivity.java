@@ -28,7 +28,6 @@ public class LandmarkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landmark);
 
-        // Initialize views
         imgLandmark = findViewById(R.id.imgLandmark);
         tvName = findViewById(R.id.tvName);
         tvAddress = findViewById(R.id.tvAddress);
@@ -36,7 +35,6 @@ public class LandmarkActivity extends AppCompatActivity {
         btnQr = findViewById(R.id.btnQr);
         btnDelete = findViewById(R.id.btnDelete);
 
-        // Get landmark ID from intent
         int landmarkId = getIntent().getIntExtra("landmark_id", -1);
         if (landmarkId != -1) {
             AppDatabase.getInstance(this)
@@ -54,12 +52,8 @@ public class LandmarkActivity extends AppCompatActivity {
                             }
                         }
                     });
-        } else {
-            Toast.makeText(this, "Invalid landmark ID", Toast.LENGTH_SHORT).show();
-            finish();
         }
 
-        // Show QR button
         btnQr.setOnClickListener(v -> {
             if (landmark != null) {
                 String data = LCardUtils.landmarkToLCard(landmark);
@@ -67,7 +61,6 @@ public class LandmarkActivity extends AppCompatActivity {
             }
         });
 
-        // Delete button
         btnDelete.setOnClickListener(v -> {
             if (landmark != null) {
                 new AlertDialog.Builder(this)
@@ -87,7 +80,7 @@ public class LandmarkActivity extends AppCompatActivity {
     }
 
     private void populateUI() {
-        if (landmark.photoUri != null && !landmark.photoUri.isEmpty()) {
+        if (landmark.photoUri != null) {
             imgLandmark.setImageURI(Uri.parse(landmark.photoUri));
         } else {
             imgLandmark.setImageResource(R.drawable.ic_launcher_background);

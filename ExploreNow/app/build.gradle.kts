@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.zxing:core:3.5.4")
+    implementation(libs.core.v354)
     implementation (libs.zxing.android.embedded)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
