@@ -19,7 +19,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-public class LandmarkListActivity extends AppCompatActivity {
+public class LandmarkListActivity extends BaseActivity {
 
     private LandmarkViewModel viewModel;
     private LandmarkAdapter adapter;
@@ -31,6 +31,7 @@ public class LandmarkListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landmark_list);
+        setupToolbar();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewLandmarks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,17 +50,18 @@ public class LandmarkListActivity extends AppCompatActivity {
             startActivity(new Intent(this, EditorActivity.class));
         });
 
-        // Клик върху landmark за редакция
-        adapter.setOnItemClick(landmark -> {
-            Intent intent = new Intent(this, EditorActivity.class);
-            intent.putExtra(EditorActivity.EXTRA_LANDMARK_ID, landmark.id);
-            startActivity(intent);
-        });
+//        // Клик върху landmark за редакция
+//        adapter.setOnItemClick(landmark -> {
+//            Intent intent = new Intent(this, EditorActivity.class);
+//            intent.putExtra(EditorActivity.EXTRA_LANDMARK_ID, landmark.id);
+//            startActivity(intent);
+//        });
 
         // QR бутон
         adapter.setOnQrClick(landmark -> {
-            String data = LCardUtils.landmarkToLCard(landmark);
-            LandmarkQrActivity.start(this, data);
+            String url = LCardUtils.landmarkToQrUrl(landmark);
+            //String data = LCardUtils.landmarkToLCard(landmark);
+            LandmarkQrActivity.start(this, url);
         });
 
         // Delete бутон

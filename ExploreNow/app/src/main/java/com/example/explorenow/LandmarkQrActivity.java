@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.explorenow.utils.QrUtils;
 import com.google.zxing.WriterException;
 
-public class LandmarkQrActivity extends AppCompatActivity {
+public class LandmarkQrActivity extends BaseActivity {
 
     private static final String EXTRA_QR_DATA = "qr_data";
 

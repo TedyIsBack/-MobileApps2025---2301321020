@@ -40,17 +40,27 @@
             android:layout_marginTop="8dp"/>
 
         <com.google.android.material.button.MaterialButton
+            style="@style/btnStyle"
             android:id="@+id/btnQr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Show QR"
             android:layout_marginTop="12dp"/>
 
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            style="@style/btnStyle"-->
+<!--            android:id="@+id/btnDelete"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Delete"-->
+<!--            android:layout_marginTop="8dp"/>-->
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnDelete"
+            style="@style/btnStyle"
+            android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="Edit"
             android:layout_marginTop="8dp"/>
 
     </LinearLayout>

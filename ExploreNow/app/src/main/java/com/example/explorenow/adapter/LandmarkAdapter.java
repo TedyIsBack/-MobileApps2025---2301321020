@@ -1,5 +1,6 @@
 package com.example.explorenow.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.explorenow.LandmarkActivity;
 import com.example.explorenow.R;
 import com.example.explorenow.data.Landmark;
 
@@ -21,29 +23,18 @@ import java.util.List;
 public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.LandmarkViewHolder> {
 
     private final List<Landmark> landmarks = new ArrayList<>();
-    private OnItemClick itemClick;
     private OnQrClick qrClick;
-    private OnEditClick editClick;
     private OnDeleteClick deleteClick;
-
-    public interface OnItemClick {
-        void onClick(Landmark landmark);
-    }
 
     public interface OnQrClick {
         void onQrClick(Landmark landmark);
     }
 
-    public interface OnEditClick {
-        void onEditClick(Landmark landmark);
-    }
-
     public interface OnDeleteClick {
         void onDeleteClick(Landmark landmark);
     }
-    public void setOnItemClick(OnItemClick click) { this.itemClick = click; }
+
     public void setOnQrClick(OnQrClick click) { this.qrClick = click; }
-    public void setOnEditClick(OnEditClick click) { this.editClick = click; }
     public void setOnDeleteClick(OnDeleteClick click) { this.deleteClick = click; }
 
     @NonNull
@@ -60,6 +51,7 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
 
         holder.tvName.setText(landmark.name);
         holder.tvAddress.setText(landmark.address);
+        holder.tvDescription.setText(landmark.description);
 
         if (landmark.photoUri != null) {
             holder.imgLandmark.setImageURI(Uri.parse(landmark.photoUri));
@@ -68,7 +60,9 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
         }
 
         holder.cardView.setOnClickListener(v -> {
-            if (itemClick != null) itemClick.onClick(landmark);
+            Intent intent = new Intent(holder.itemView.getContext(), LandmarkActivity.class);
+            intent.putExtra("landmark_id", landmark.id);
+            holder.itemView.getContext().startActivity(intent);
         });
 
         holder.btnQr.setOnClickListener(v -> {
@@ -79,7 +73,6 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
             if (deleteClick != null) deleteClick.onDeleteClick(landmark);
         });
     }
-
 
     @Override
     public int getItemCount() { return landmarks.size(); }
@@ -93,7 +86,7 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
     static class LandmarkViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView imgLandmark;
-        TextView tvName, tvAddress;
+        TextView tvName, tvAddress, tvDescription;
         Button btnQr, btnDelete;
 
         public LandmarkViewHolder(@NonNull View itemView) {
@@ -102,9 +95,9 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
             imgLandmark = itemView.findViewById(R.id.imgLandmark);
             tvName = itemView.findViewById(R.id.tvName);
             tvAddress = itemView.findViewById(R.id.tvAddress);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
             btnQr = itemView.findViewById(R.id.btnQr);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
-
 }

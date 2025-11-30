@@ -22,7 +22,7 @@ import com.google.android.material.button.MaterialButton;
 import java.io.File;
 import java.io.IOException;
 
-public class EditorActivity extends AppCompatActivity {
+public class EditorActivity extends BaseActivity {
 
     public static final String EXTRA_LANDMARK_ID = "landmark_id";
     private PhotoRepository photoRepo;

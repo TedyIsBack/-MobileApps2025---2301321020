@@ -1,5 +1,6 @@
 package com.example.explorenow;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -7,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import com.example.explorenow.data.Landmark;
@@ -15,11 +15,11 @@ import com.example.explorenow.repository.AppDatabase;
 import com.example.explorenow.utils.LCardUtils;
 import com.google.android.material.button.MaterialButton;
 
-public class LandmarkActivity extends AppCompatActivity {
+public class LandmarkActivity extends BaseActivity {
 
     private ImageView imgLandmark;
     private TextView tvName, tvAddress, tvDesc;
-    private MaterialButton btnQr, btnDelete;
+    private MaterialButton btnQr, btnEdit;
 
     private Landmark landmark;
 
@@ -33,7 +33,7 @@ public class LandmarkActivity extends AppCompatActivity {
         tvAddress = findViewById(R.id.tvAddress);
         tvDesc = findViewById(R.id.tvDescription);
         btnQr = findViewById(R.id.btnQr);
-        btnDelete = findViewById(R.id.btnDelete);
+        btnEdit = findViewById(R.id.btnEdit);
 
         int landmarkId = getIntent().getIntExtra("landmark_id", -1);
         if (landmarkId != -1) {
@@ -52,6 +52,9 @@ public class LandmarkActivity extends AppCompatActivity {
                             }
                         }
                     });
+        } else {
+            Toast.makeText(this, "Invalid Landmark", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
         btnQr.setOnClickListener(v -> {
@@ -61,20 +64,12 @@ public class LandmarkActivity extends AppCompatActivity {
             }
         });
 
-        btnDelete.setOnClickListener(v -> {
+
+        btnEdit.setOnClickListener(v -> {
             if (landmark != null) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Delete Landmark")
-                        .setMessage("Are you sure you want to delete this landmark?")
-                        .setPositiveButton("Yes", (dialog, which) -> {
-                            AppDatabase.getInstance(getApplicationContext())
-                                    .landmarkDao()
-                                    .delete(landmark);
-                            Toast.makeText(this, "Landmark deleted", Toast.LENGTH_SHORT).show();
-                            finish();
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
+                Intent intent = new Intent(this, EditorActivity.class);
+                intent.putExtra(EditorActivity.EXTRA_LANDMARK_ID, landmark.id);
+                startActivity(intent);
             }
         });
     }
@@ -85,7 +80,6 @@ public class LandmarkActivity extends AppCompatActivity {
         } else {
             imgLandmark.setImageResource(R.drawable.ic_launcher_background);
         }
-
         tvName.setText(landmark.name);
         tvAddress.setText(landmark.address);
         tvDesc.setText(landmark.description);
